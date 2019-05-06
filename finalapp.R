@@ -42,7 +42,8 @@ ui <- navbarPage("My Application",
                           titlePanel("Location of UPS Violations in Boston"),  
                           sidebarLayout(
                             sidebarPanel(
-                              p("The areas of red circles are proportional to the frequencies of violations at each location.")
+                              p("The areas of red circles are proportional to the frequencies of violations roughly at each street location. The most concentrated areas are in the Financial
+                                District which makes sense with all the one way streets and narrow streets along with the increased car and foot traffic.")
                             ),
                           mainPanel( 
                             leafletOutput("tmap", width="900", height="600")
