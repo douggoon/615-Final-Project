@@ -1,0 +1,56 @@
+---
+title: "Data Clean"
+author: "Doug Goon"
+date: "May 5, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library("tidyverse")
+library("dplyr")
+library("ggplot2")
+```
+
+
+```{r}
+violations <- read.csv("Violations_Report.csv")
+```
+
+```{r}
+df <- violations %>% 
+ count(location, lon, lat) %>% 
+ group_by(location, lon, lat)
+colnames(df)[4] <- "freq"
+
+#save(df, file = 'new.Rda')
+#write.csv(df, file = "new.csv")
+```
+
+```{r}
+df_count <- violations %>% 
+ count(Expense.Center, Month, Year) %>% 
+ group_by(Expense.Center, Month, Year)
+colnames(df_count)[4] <- "freq"
+
+#save(df_count, file = 'df_count.Rda')
+#write.csv(df_count, file = "df_count.csv")
+```
+
+
+```{r}
+df_count$Month <- factor(df_count$Month, levels = c("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"))
+ggplot(df_count, aes(x = factor(Month), y = freq, fill = factor(Year))) + 
+  geom_col(stat = "identity") +
+  labs(title = "Number of Violations", x = "Month", y = "Count") + scale_fill_discrete(name = "Year") +
+  theme()
+```
+
+
+
+
+
+
